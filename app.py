@@ -10,11 +10,11 @@ from src.rag import process_query
 from financeiro import extrair_transacoes_do_texto, salvar_transacoes_extraidas
 from langchain_community.document_loaders import PyPDFLoader
 
-# Serviços financeiros
-from services.pix import enviar_pix
-from services.pagamentos import pagar_boleto
-from services.recargas import fazer_recarga
-from services.emprestimos import contratar_emprestimo
+# Serviços financeiros  (CORRIGIDO)
+from serviços.pix import enviar_pix
+from serviços.pagamentos import pagar_boleto
+from serviços.recargas import fazer_recarga
+from serviços.emprestimos import contratar_emprestimo
 
 
 # -----------------------------------------------------
@@ -79,16 +79,10 @@ if menu == "Dashboard":
     st.metric("Saldo atual", f"R$ {data['saldo']:.2f}")
     st.markdown("---")
 
-
-    # ======================================================
-    #   DASHBOARD PRO — GASTOS POR CATEGORIA (DINÂMICO)
-    # ======================================================
-
     st.subheader("📊 Gastos por Categoria (PRO)")
 
     import plotly.graph_objects as go
 
-    # 1. SOMA DOS GASTOS POR CATEGORIA
     categoria_totais = {}
     for t in transacoes:
         if t["valor"] < 0:
@@ -120,8 +114,6 @@ if menu == "Dashboard":
 
         lista_cores = [cores.get(cat, "#7f8c8d") for cat in labels]
 
-
-        # 2. DONUT
         fig = go.Figure(
             data=[go.Pie(
                 labels=labels,
@@ -149,8 +141,6 @@ if menu == "Dashboard":
 
         st.plotly_chart(fig, use_container_width=True)
 
-
-        # 3. LISTAGEM DETALHADA
         st.markdown("### 📌 Detalhamento por Categoria")
 
         for categoria, valor in categoria_totais.items():
@@ -165,8 +155,6 @@ if menu == "Dashboard":
             </div>
             """, unsafe_allow_html=True)
 
-
-        # 4. CATEGORIA MAIS CARA
         maior_categoria = max(categoria_totais, key=categoria_totais.get)
         st.markdown(f"""
         <div style='background:#1c1c2e; padding:15px; border-radius:10px; margin-top:20px; color:white;'>
@@ -178,13 +166,8 @@ if menu == "Dashboard":
     else:
         st.info("Nenhuma despesa encontrada para gerar gráficos.")
 
-
     st.markdown("---")
 
-
-    # --------------------------
-    # Maiores gastos
-    # --------------------------
     st.subheader("💸 Maiores gastos")
     despesas = [t for t in transacoes if t["valor"] < 0]
 
@@ -197,12 +180,7 @@ if menu == "Dashboard":
 
     st.markdown("---")
 
-
-    # --------------------------
-    # Últimas transações
-    # --------------------------
     st.subheader("📜 Últimas transações")
-
     for t in reversed(transacoes[-10:]):
         st.write(f"- **{t['tipo']}** — {t['descricao']} — R$ {t['valor']} — categoria: {t['categoria']}")
 
@@ -225,7 +203,6 @@ elif menu == "Enviar PDF":
 
         st.success("PDFs carregados com sucesso!")
         st.subheader("🔍 Extraindo transações dos PDFs...")
-
 
         for u in uploaded:
             with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
