@@ -21,4 +21,3 @@ def enviar_pix(chave, valor):
 
     save_db(data)
     return True, "PIX enviado com sucesso!"
-
