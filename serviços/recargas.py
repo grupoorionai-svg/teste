@@ -19,4 +19,3 @@ def fazer_recarga(numero, operadora, valor):
 
     save_db(data)
     return True, "Recarga realizada!"
-
