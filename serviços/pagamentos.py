@@ -19,4 +19,3 @@ def pagar_boleto(codigo, valor):
 
     save_db(data)
     return True, "Pagamento realizado!"
-
