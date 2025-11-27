@@ -11,10 +11,11 @@ from financeiro import extrair_transacoes_do_texto, salvar_transacoes_extraidas
 from langchain_community.document_loaders import PyPDFLoader
 
 # Serviços financeiros  (CORRIGIDO)
-from serviços.pix import enviar_pix
-from serviços.pagamentos import pagar_boleto
-from serviços.recargas import fazer_recarga
-from serviços.emprestimos import contratar_emprestimo
+from services.pix import enviar_pix
+from services.pagamentos import pagar_boleto
+from services.recargas import fazer_recarga
+from services.emprestimos import contratar_emprestimo
+
 
 
 # -----------------------------------------------------
