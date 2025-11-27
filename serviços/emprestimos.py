@@ -23,4 +23,3 @@ def contratar_emprestimo(valor, juros=0.10):
 
     # Retornar valor total a pagar (entrada simulada)
     return True, total
-
